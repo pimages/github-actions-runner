@@ -2,6 +2,8 @@
 
 set -e
 
+trap "echo Deconfiguring && /runner/config.sh remove --token ${GH_RUNNER_TOKEN}" SIGTERM
+
 if [[ -z ${GH_RUNNER_TOKEN} ]];
 then
     echo "Environment variable 'GH_RUNNER_TOKEN' is not set"
@@ -31,4 +33,4 @@ echo "Runner working directory: ${workDir}"
 # can fail if already configured
 /runner/config.sh --unattended --url ${GH_REPOSITORY} --token ${GH_RUNNER_TOKEN} --labels ${GH_RUNNER_LABELS} --replace --work ${workDir} || echo
 
-exec /runner/run.sh
+/runner/run.sh

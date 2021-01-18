@@ -34,4 +34,4 @@ RUN curl -o actions-runner-linux-arm.tar.gz -L http://172.17.0.1/actions-runner-
 
 COPY start.sh /
 
-CMD /start.sh
+CMD ["/bin/bash", "/start.sh" ]
