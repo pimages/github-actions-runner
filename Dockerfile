@@ -26,7 +26,7 @@ USER runner
 WORKDIR /runner
 
 # install github actions runner
-RUN curl -o actions-runner-linux-arm.tar.gz -L http://host.docker.internal/actions-runner-linux-arm-${GH_ACTIONS_RUNNER_VERSION}.tar.gz \
+RUN curl -o actions-runner-linux-arm.tar.gz -L http://172.17.0.1/actions-runner-linux-arm-${GH_ACTIONS_RUNNER_VERSION}.tar.gz \
     && tar xzf ./actions-runner-linux-arm.tar.gz \
     && rm -f actions-runner-linux-arm.tar.gz
 
