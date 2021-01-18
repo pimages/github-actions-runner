@@ -1,5 +1,5 @@
 
-FROM debian:buster
+FROM balenalib/raspberry-pi-debian:latest
 
 ARG GH_ACTIONS_RUNNER_VERSION=2.263.0
 ARG PACKAGES="gnupg2 apt-transport-https ca-certificates software-properties-common pwgen git make curl wget zip libicu-dev build-essential libssl-dev"
