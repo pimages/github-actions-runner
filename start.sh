@@ -1,8 +1,13 @@
 #!/usr/bin/env bash
 
-set -e
+_term() { 
+  echo "Caught SIGTERM signal!"
+  kill -TERM "$child" 2>/dev/null
+  /runner/config.sh remove --token ${GH_RUNNER_TOKEN}
+  exit
+}
 
-trap "echo Deconfiguring && /runner/config.sh remove --token ${GH_RUNNER_TOKEN}" SIGTERM
+trap _term SIGTERM
 
 if [[ -z ${GH_RUNNER_TOKEN} ]];
 then
@@ -33,4 +38,9 @@ echo "Runner working directory: ${workDir}"
 # can fail if already configured
 /runner/config.sh --unattended --url ${GH_REPOSITORY} --token ${GH_RUNNER_TOKEN} --labels ${GH_RUNNER_LABELS} --replace --work ${workDir} || echo
 
-/runner/run.sh
+# start runner in background and save pid
+/runner/run.sh &
+runner_pid=$! 
+
+# wait for the runner to shut down
+wait "$runner_pid"
