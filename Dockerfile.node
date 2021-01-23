@@ -1,5 +1,5 @@
 
-FROM samber/github-actions-runner:latest
+FROM pimages/github-actions-runner:latest
 
 USER root
 

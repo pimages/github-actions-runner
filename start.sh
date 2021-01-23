@@ -1,20 +1,35 @@
 #!/usr/bin/env bash
 
+# function handling signals from Docker
 _term() { 
-  echo "Caught SIGTERM signal!"
+  echo "Caught $1 signal!"
   kill -TERM "$child" 2>/dev/null
-  /runner/config.sh remove --token ${GH_RUNNER_TOKEN}
+  if [[ $1 eq "SIGUSR1" ]];
+  then
+    echo "Deregestering the runner"
+    /runner/config.sh remove --token ${GH_RUNNER_TOKEN}
+  else
+    echo "NOT deregestering the runner"
+  fi
   exit
 }
 
-trap _term SIGTERM
+# SIGTERM is the standard signal when container is stopped
+# -> keep the runner registered with Github
+trap "_term \"SIGTERM\"" SIGTERM
 
+# SIGUSR1 stop container like: docker kill -s SIGUSR1 <container_name>
+# -> delete the registration of the runner with Guthub
+trap "_term \"SIGUSR1\"" SIGUSR1
+
+# check for runner token to be set in environment
 if [[ -z ${GH_RUNNER_TOKEN} ]];
 then
     echo "Environment variable 'GH_RUNNER_TOKEN' is not set"
     exit 1
 fi
 
+# check for repository URL to be set in envrionment
 if [[ -z ${GH_REPOSITORY} ]];
 then
     echo "Environment variable 'GH_REPOSITORY' is not set"

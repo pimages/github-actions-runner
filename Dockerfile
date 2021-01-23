@@ -1,18 +1,14 @@
+# basic runner image with (almost) nothing installed
+# image name: pimages/github-actions-runner
 
 FROM balenalib/raspberry-pi-debian:latest
 
 ARG GH_ACTIONS_RUNNER_VERSION=2.275.1
-ARG PACKAGES="gnupg2 apt-transport-https ca-certificates software-properties-common pwgen git make curl wget zip libicu-dev build-essential libssl-dev"
+ARG PACKAGES="ca-certificates pwgen git"
 
-# install basic stuff
+# install packages
 RUN apt-get update \
     && apt-get install -y -q ${PACKAGES} \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-# install docker
-RUN apt-get update \
-    && apt-get install -y docker.io \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
