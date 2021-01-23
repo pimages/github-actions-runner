@@ -4,7 +4,7 @@
 _term() { 
   echo "Caught $1 signal!"
   kill -TERM "$child" 2>/dev/null
-  if [[ $1 eq "SIGUSR1" ]];
+  if [[ $1 == "SIGUSR1" ]];
   then
     echo "Deregestering the runner"
     /runner/config.sh remove --token ${GH_RUNNER_TOKEN}
