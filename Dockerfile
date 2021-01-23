@@ -4,7 +4,7 @@
 FROM balenalib/raspberry-pi-debian:latest
 
 ARG GH_ACTIONS_RUNNER_VERSION=2.276.1
-ARG PACKAGES="ca-certificates pwgen git"
+ARG PACKAGES="ca-certificates pwgen git libicu63 libssl1.0.2"
 
 # install packages
 RUN apt-get update \
