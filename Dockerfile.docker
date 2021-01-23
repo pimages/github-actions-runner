@@ -13,4 +13,8 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# configure docker group
+RUN groupmod -g 125 docker \
+    && usermod -a -G docker runner
+
 USER runner

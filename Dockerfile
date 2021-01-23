@@ -14,8 +14,6 @@ RUN apt-get update \
 
 # create "runner" user
 RUN useradd -d /runner --uid=1000 runner \
-    && groupmod -g 125 docker \
-    && usermod -a -G docker runner \
     && echo 'runner:runner' | chpasswd \
     && mkdir /runner \
     && chown -R runner:runner /runner
