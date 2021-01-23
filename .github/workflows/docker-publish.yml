@@ -37,7 +37,7 @@ jobs:
 
   push-github:
     runs-on: [self-hosted, raspi, armhf]
-    if: github.event_name == 'push'
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
 
     steps:
       - uses: actions/checkout@v2
