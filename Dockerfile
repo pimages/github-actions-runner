@@ -3,7 +3,7 @@
 
 FROM balenalib/raspberry-pi-debian:latest
 
-ARG GH_ACTIONS_RUNNER_VERSION=2.275.1
+ARG GH_ACTIONS_RUNNER_VERSION=2.276.1
 ARG PACKAGES="ca-certificates pwgen git"
 
 # install packages
@@ -24,7 +24,7 @@ USER runner
 WORKDIR /runner
 
 # install github actions runner
-RUN curl -o actions-runner-linux-arm.tar.gz -L http://172.17.0.1/actions-runner-linux-arm-${GH_ACTIONS_RUNNER_VERSION}.tar.gz \
+RUN curl -o actions-runner-linux-arm.tar.gz -L https://github.com/actions/runner/releases/download/v${GH_ACTIONS_RUNNER_VERSION}/actions-runner-linux-arm-${GH_ACTIONS_RUNNER_VERSION}.tar.gz \
     && tar xzf ./actions-runner-linux-arm.tar.gz \
     && rm -f actions-runner-linux-arm.tar.gz
 
